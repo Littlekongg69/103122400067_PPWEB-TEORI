@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Terratech Hub — Diagnostics & Logs. Laporan kesehatan perangkat keras aktuator, histori log anomali habitat, dan formulir inspeksi manual.">
+  <title>Terratech Hub — Diagnostics &amp; Logs</title>
+  <link rel="stylesheet" href="assets/css/reset.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox" aria-hidden="true">
+  <label for="nav-toggle" class="nav-backdrop" aria-label="Tutup navigasi"></label>
+
+  <div class="app-container">
+    <!-- ASIDE: SIDEBAR NAVIGATION -->
+    <aside class="app-sidebar" aria-label="Navigasi Utama">
+      <header class="sidebar-header">
+        <img src="assets/images/icons/logo.svg" alt="Terratech Hub Logo" class="brand-icon">
+        <div class="brand-info">
+          <span class="brand-title">TERRATECH</span>
+          <span class="brand-subtitle">Micro-Habitat OS</span>
+        </div>
+      </header>
+
+      <nav class="sidebar-nav">
+        <div class="nav-label">Sistem Kontrol</div>
+        <a href="index.html" class="nav-item" id="nav-dashboard">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="9"/>
+            <rect x="14" y="3" width="7" height="5"/>
+            <rect x="14" y="12" width="7" height="9"/>
+            <rect x="3" y="16" width="7" height="5"/>
+          </svg>
+          <span>Dashboard</span>
+        </a>
+        <a href="units.html" class="nav-item" id="nav-units">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+            <line x1="3" y1="9" x2="21" y2="9"/>
+            <line x1="9" y1="21" x2="9" y2="9"/>
+          </svg>
+          <span>Enclosure Units</span>
+          <span class="badge badge-muted badge-pill">4 Tank</span>
+        </a>
+        <a href="registry.html" class="nav-item" id="nav-registry">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M11 20A7 7 0 0 1 4 13C4 7 11 3 11 3s7 4 7 10a7 7 0 0 1-7 7z"/>
+            <path d="M11 20v-8M11 12l4-4M11 15l-3-3"/>
+          </svg>
+          <span>Flora &amp; Fauna</span>
+        </a>
+        <a href="maintenance.html" class="nav-item" id="nav-maintenance">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+          </svg>
+          <span>Maintenance</span>
+          <span class="badge badge-amber badge-pill">1 Due</span>
+        </a>
+        <a href="diagnostics.html" class="nav-item active" id="nav-diagnostics">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+          <span>Diagnostics &amp; Logs</span>
+          <span class="badge badge-cyan badge-pill">Audit</span>
+        </a>
+
+        <div class="nav-label" style="margin-top: 1.5rem;">Kesehatan Aktuator</div>
+        <div style="padding: 0 0.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+          <div style="font-size: 0.75rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+            <span>Efisiensi Sistem</span>
+            <span style="color: var(--accent-leaf);">96.8% Nominal</span>
+          </div>
+          <div style="font-size: 0.75rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+            <span>Log Anomali 24j</span>
+            <span style="color: var(--accent-cyan);">0 Kritis</span>
+          </div>
+        </div>
+      </nav>
+
+      <footer class="sidebar-footer">
+        <div class="micro-node-card">
+          <div class="node-header">
+            <span>SELF-TEST PROTOCOL</span>
+            <span class="node-status-dot"></span>
+          </div>
+          <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-main);">
+            Hardware POST: PASS
+          </div>
+          <div style="font-size: 0.7rem; color: var(--text-muted); font-family: var(--font-mono);">
+            Bus I2C &amp; RS485 Siaga
+          </div>
+        </div>
+      </footer>
+    </aside>
+
+    <!-- MAIN APP WRAPPER -->
+    <div class="app-main">
+      <header class="app-topbar">
+        <div class="topbar-left">
+          <label for="nav-toggle" class="nav-toggle-btn" aria-label="Toggle navigasi mobile">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </label>
+          <div class="breadcrumbs">
+            <span>Sistem</span>
+            <span>/</span>
+            <span class="current">Diagnostics &amp; Logs</span>
+          </div>
+        </div>
+
+        <div class="topbar-ticker">
+          <div class="ticker-item">
+            <span style="color: var(--text-muted);">STATUS AKTUATOR:</span>
+            <span class="val" style="color: var(--accent-leaf);">6/6 Sehat</span>
+          </div>
+          <span class="ticker-sep">|</span>
+          <div class="ticker-item">
+            <span style="color: var(--text-muted);">LOG HISTORI:</span>
+            <span class="val">1,248 Entri</span>
+          </div>
+          <span class="ticker-sep">|</span>
+          <div class="ticker-item">
+            <span style="color: var(--text-muted);">SELF-DIAGNOSTIC:</span>
+            <span class="val" style="color: var(--accent-leaf);">BERSIH</span>
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <a href="#form-inspeksi" class="btn btn-primary btn-sm">Mulai Form Inspeksi</a>
+        </div>
+      </header>
+
+      <!-- CONTENT AREA -->
+      <main class="content-area">
+        <section class="page-hero" aria-labelledby="diag-title">
+          <div class="hero-titles">
+            <h1 id="diag-title">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+              </svg>
+              Diagnostik Hardware &amp; Audit Anomali
+            </h1>
+            <p>Pemeriksaan mandiri aktuator otomatisasi, rekaman audit parameter lingkungan 24 jam, dan formulir pengajuan inspeksi habitat manual.</p>
+          </div>
+          <div class="hero-meta">
+            <span class="badge badge-cyan">Sistem Sehat 96.8%</span>
+            <span class="badge badge-leaf">Nir-Kesalahan Kritis</span>
+          </div>
+        </section>
+
+        <!-- SECTION 1: ACTUATOR HARDWARE HEALTH CHECK (CSS Conic-Gradient Radial Meters) -->
+        <section aria-labelledby="hardware-health-title">
+          <div class="card-header">
+            <div class="card-title">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/>
+                <rect x="2" y="14" width="20" height="8" rx="2" ry="2"/>
+                <line x1="6" y1="6" x2="6.01" y2="6"/>
+                <line x1="6" y1="18" x2="6.01" y2="18"/>
+              </svg>
+              <h2 id="hardware-health-title">Laporan Health Check Perangkat Aktuator &amp; Probe</h2>
+            </div>
+            <span class="badge badge-muted">Diagnostik Terakhir: 10 Menit Lalu</span>
+          </div>
+
+          <div class="actuator-health-grid">
+            <!-- Actuator 1: Ultrasonic Misting Transducer -->
+            <article class="health-card">
+              <div class="health-radial-meter">
+                <div>
+                  <h3 style="font-size: 0.95rem;">Ultrasonic Transducer 24V</h3>
+                  <span style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono);">Nozzle Misting Tank 01 &amp; 02</span>
+                </div>
+                <div class="radial-display" style="--score: 99.2%; --accent-leaf: #34d399;">
+                  <div class="radial-inner">99%</div>
+                </div>
+              </div>
+              <div style="font-size: 0.78rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 0.25rem;">
+                <div style="display: flex; justify-content: space-between;">
+                  <span>Siklus Kerja:</span>
+                  <span class="mono">1,420 siklus</span>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span>Tekanan Pompa:</span>
+                  <span class="mono" style="color: var(--accent-leaf);">6.2 bar (Normal)</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Actuator 2: Peristaltic Dosing Pump -->
+            <article class="health-card">
+              <div class="health-radial-meter">
+                <div>
+                  <h3 style="font-size: 0.95rem;">Pompa Dosing Peristaltik</h3>
+                  <span style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono);">Nutrisi Mikro Tank 04</span>
+                </div>
+                <div class="radial-display" style="--score: 94.0%; --accent-leaf: #38bdf8;">
+                  <div class="radial-inner">94%</div>
+                </div>
+              </div>
+              <div style="font-size: 0.78rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 0.25rem;">
+                <div style="display: flex; justify-content: space-between;">
+                  <span>Integritas Selang:</span>
+                  <span class="mono">82% (Baik)</span>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span>Laju Aliran:</span>
+                  <span class="mono" style="color: var(--accent-cyan);">1.2 mL / menit</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Actuator 3: Ceramic Heat Emitter -->
+            <article class="health-card">
+              <div class="health-radial-meter">
+                <div>
+                  <h3 style="font-size: 0.95rem;">Pemanas Keramik PTC 50W</h3>
+                  <span style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono);">Basking Zone Tank 03</span>
+                </div>
+                <div class="radial-display" style="--score: 97.5%; --accent-leaf: #f59e0b;">
+                  <div class="radial-inner">97%</div>
+                </div>
+              </div>
+              <div style="font-size: 0.78rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 0.25rem;">
+                <div style="display: flex; justify-content: space-between;">
+                  <span>Resistansi PTC:</span>
+                  <span class="mono">242 Ω (Nominal)</span>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span>Emisi Termal:</span>
+                  <span class="mono" style="color: var(--accent-amber);">Stabil pada 34.0°C</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Actuator 4: Full Spectrum LED PWM Driver -->
+            <article class="health-card">
+              <div class="health-radial-meter">
+                <div>
+                  <h3 style="font-size: 0.95rem;">Driver LED PWM 6500K</h3>
+                  <span style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono);">Pencahayaan Kanopi Spektrum</span>
+                </div>
+                <div class="radial-display" style="--score: 100%; --accent-leaf: #34d399;">
+                  <div class="radial-inner">100%</div>
+                </div>
+              </div>
+              <div style="font-size: 0.78rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 0.25rem;">
+                <div style="display: flex; justify-content: space-between;">
+                  <span>Suhu Heatsink:</span>
+                  <span class="mono">42.1°C (Dingin)</span>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span>Efisiensi Daya:</span>
+                  <span class="mono" style="color: var(--accent-leaf);">92.4% Optimal</span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- SECTION 2: ANOMALY TELEMETRY LOGS (DATA TABLE) -->
+        <section class="card" aria-labelledby="anomaly-table-title">
+          <div class="card-header">
+            <div class="card-title">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+              </svg>
+              <h2 id="anomaly-table-title">Histori Log Telemetri Anomali Habitat (24 Jam)</h2>
+            </div>
+            <span class="badge badge-leaf">Penyaringan Otomatis Terhubung</span>
+          </div>
+
+          <div class="data-table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Waktu</th>
+                  <th>Level</th>
+                  <th>ID Perangkat / Sensor</th>
+                  <th>Deskripsi Parameter</th>
+                  <th>Penyimpangan</th>
+                  <th>Aksi Otomatisasi Terpanggil</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="mono">14:30:12</td>
+                  <td><span class="badge badge-cyan">INFO</span></td>
+                  <td>ACT-MIST-01</td>
+                  <td>Siklus Pengabutan Terjadwal 30s</td>
+                  <td>Nominal</td>
+                  <td>Membuka katup selenoid &amp; aktivasi pompa 6.2 bar</td>
+                </tr>
+                <tr>
+                  <td class="mono">12:15:44</td>
+                  <td><span class="badge badge-amber">WARN</span></td>
+                  <td>SENS-RH-TK02</td>
+                  <td>Kelembapan Udara Naik Cepat</td>
+                  <td>+6.2% RH / 5m</td>
+                  <td>Aktivasi kipas sirkulasi silang PWM ke 60%</td>
+                </tr>
+                <tr>
+                  <td class="mono">08:00:00</td>
+                  <td><span class="badge badge-leaf">OK</span></td>
+                  <td>LIGHT-SUN-ALL</td>
+                  <td>Fotoperiode Masuk Modus Siang</td>
+                  <td>Gradual Ramp</td>
+                  <td>Penyalaan 6500K LED &amp; emisi UVB 5.0</td>
+                </tr>
+                <tr>
+                  <td class="mono">04:12:08</td>
+                  <td><span class="badge badge-muted">INFO</span></td>
+                  <td>SENS-TMP-TK01</td>
+                  <td>Penurunan Suhu Malam Harian</td>
+                  <td>-2.1°C wajar</td>
+                  <td>Pemanas substrat PTC modulasi 20%</td>
+                </tr>
+                <tr>
+                  <td class="mono">01:45:22</td>
+                  <td><span class="badge badge-leaf">OK</span></td>
+                  <td>PUMP-RO-RES</td>
+                  <td>Level Sensor Pelampung Reservoir</td>
+                  <td>11.7 Liter</td>
+                  <td>Katup pengaman aliran tertutup rapat</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- SECTION 3: FORM PENGAJUAN INSPEKSI MANUAL (SEMANTIC HTML5 FORM) -->
+        <section class="card" id="form-inspeksi" aria-labelledby="form-heading">
+          <div class="card-header">
+            <div class="card-title">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+              </svg>
+              <h2 id="form-heading">Formulir Laporan Inspeksi Manual &amp; Kalibrasi</h2>
+            </div>
+            <span class="badge badge-leaf">Standard Audit Bio-ISO 14001</span>
+          </div>
+
+          <form action="#" method="get" class="inspection-form" onsubmit="event.preventDefault(); alert('Laporan inspeksi manual berhasil disimpan ke dalam log audit!');">
+            <div class="form-grid-2">
+              <!-- Enclosure Unit Selector -->
+              <div class="form-group">
+                <label for="select-enclosure" class="form-label">Pilih Unit Terrarium *</label>
+                <select id="select-enclosure" name="enclosure_id" class="form-control" required>
+                  <option value="">-- Pilih Enclosure Terrarium --</option>
+                  <option value="TK01">Tank 01 — Amazonian Understory (Rainforest)</option>
+                  <option value="TK02">Tank 02 — Montane Cloud Forest (Paludarium)</option>
+                  <option value="TK03">Tank 03 — Madagascar Spiny Forest (Semi-Arid)</option>
+                  <option value="TK04">Tank 04 — Borneo Peat Swamp (Riparium)</option>
+                </select>
+              </div>
+
+              <!-- Inspector Name -->
+              <div class="form-group">
+                <label for="input-inspector" class="form-label">Nama / ID Teknisi Bio-Habitat *</label>
+                <input type="text" id="input-inspector" name="inspector_name" class="form-control" placeholder="Contoh: Ir. Bima Santoso (ID: TECH-084)" required>
+              </div>
+
+              <!-- Date & Time -->
+              <div class="form-group">
+                <label for="input-date" class="form-label">Waktu Inspeksi Lapangan *</label>
+                <input type="datetime-local" id="input-date" name="inspection_date" class="form-control" value="2026-10-07T14:40" required>
+              </div>
+
+              <!-- Overall Health Score (Range Slider) -->
+              <div class="form-group">
+                <label for="range-health" class="form-label">Skor Indeks Kesehatan Habitat (1 - 5)</label>
+                <div class="range-slider-wrap">
+                  <span style="font-size: 0.75rem; color: var(--text-muted);">1 (Kritis)</span>
+                  <input type="range" id="range-health" name="health_rating" min="1" max="5" value="5" class="custom-range">
+                  <span style="font-size: 0.75rem; color: var(--accent-leaf); font-weight: 700;">5 (Optimal)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Substrate Condition (Radio Pills) -->
+            <div class="form-group">
+              <span class="form-label">Kondisi Lapisan Substrat &amp; Bioaktif *</span>
+              <div class="radio-pill-group">
+                <label class="radio-pill-btn">
+                  <input type="radio" name="substrate_status" value="pristine" checked>
+                  <span>Pristine / Sangat Sehat</span>
+                </label>
+                <label class="radio-pill-btn">
+                  <input type="radio" name="substrate_status" value="balanced">
+                  <span>Moist &amp; Seimbang</span>
+                </label>
+                <label class="radio-pill-btn">
+                  <input type="radio" name="substrate_status" value="waterlogged">
+                  <span>Terlalu Basah / Genangan</span>
+                </label>
+                <label class="radio-pill-btn">
+                  <input type="radio" name="substrate_status" value="dry">
+                  <span>Kering / Nutrisi Lapuk Berkurang</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Manual Field Readings -->
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="manual-temp" class="form-label">Pengukuran Suhu Manual (°C)</label>
+                <input type="number" id="manual-temp" name="manual_temp" class="form-control" step="0.1" placeholder="Misal: 25.1" min="15" max="45">
+              </div>
+
+              <div class="form-group">
+                <label for="manual-ph" class="form-label">Pengukuran pH Probe Tanah</label>
+                <input type="number" id="manual-ph" name="manual_ph" class="form-control" step="0.1" placeholder="Misal: 6.4" min="3" max="9">
+              </div>
+            </div>
+
+            <!-- Detected Biological Anomalies (Checkboxes) -->
+            <div class="form-group">
+              <span class="form-label">Anomali Terdeteksi (Centang Jika Ditemukan)</span>
+              <div class="checkbox-matrix-group">
+                <label class="checkbox-tile">
+                  <input type="checkbox" name="anomalies" value="mold">
+                  <span>Spora Jamur Berlebih di Kayu</span>
+                </label>
+                <label class="checkbox-tile">
+                  <input type="checkbox" name="anomalies" value="nozzle">
+                  <span>Kerak / Sumpat Nozzle Misting</span>
+                </label>
+                <label class="checkbox-tile">
+                  <input type="checkbox" name="anomalies" value="fan">
+                  <span>Desir Getaran Kipas Abnormal</span>
+                </label>
+                <label class="checkbox-tile">
+                  <input type="checkbox" name="anomalies" value="chlorosis">
+                  <span>Klorosis / Daun Menguning</span>
+                </label>
+                <label class="checkbox-tile">
+                  <input type="checkbox" name="anomalies" value="pest">
+                  <span>Tungau / Hama Non-Bioaktif</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Notes Textarea -->
+            <div class="form-group">
+              <label for="inspection-notes" class="form-label">Catatan Pengamatan &amp; Tindakan Mitigasi</label>
+              <textarea id="inspection-notes" name="notes" rows="4" class="form-control" placeholder="Tuliskan temuan mikroskopis, tingkah laku spesimen, atau rekomendasi penggantian komponen..."></textarea>
+            </div>
+
+            <!-- Substrate Core Sample Upload -->
+            <div class="form-group">
+              <span class="form-label">Unggah Dokumentasi Foto Sampel Substrat</span>
+              <label for="file-sample" class="file-dropzone">
+                <svg style="margin: 0 auto 0.5rem; width: 32px; height: 32px; stroke: var(--accent-leaf);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="17 8 12 3 7 8"/>
+                  <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+                <p style="font-size: 0.85rem; color: var(--text-main); font-weight: 600;">Klik untuk memilih berkas gambar makro</p>
+                <p style="font-size: 0.72rem; color: var(--text-muted);">Format didukung: JPG, PNG, WEBP (Maks 15 MB)</p>
+                <input type="file" id="file-sample" name="sample_photo" accept="image/*" style="display: none;">
+              </label>
+            </div>
+
+            <!-- Emergency Lockdown Checkbox -->
+            <div style="background: rgba(248, 113, 113, 0.08); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1rem; display: flex; align-items: center; gap: 0.85rem;">
+              <input type="checkbox" id="emergency-override" name="emergency_lockdown">
+              <label for="emergency-override" style="font-size: 0.82rem; color: var(--text-main); cursor: pointer;">
+                <strong>Otorisasi Override Darurat:</strong> Putuskan daya lampu basking dan kunci pengabutan jika terjadi lonjakan parameter ekstrem.
+              </label>
+            </div>
+
+            <!-- Buttons -->
+            <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 0.5rem;">
+              <button type="reset" class="btn btn-secondary">
+                Reset Isian
+              </button>
+              <button type="submit" class="btn btn-primary">
+                Simpan &amp; Verifikasi Log Inspeksi
+              </button>
+            </div>
+          </form>
+        </section>
+
+      </main>
+    </div>
+  </div>
+</body>
+</html>

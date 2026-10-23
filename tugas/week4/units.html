@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Terratech Hub — Enclosure Units Management. Pemantauan dan konfigurasi mikrohabitat terrarium individual.">
+  <title>Terratech Hub — Enclosure Units Management</title>
+  <link rel="stylesheet" href="assets/css/reset.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox" aria-hidden="true">
+  <label for="nav-toggle" class="nav-backdrop" aria-label="Tutup navigasi"></label>
+
+  <div class="app-container">
+    <!-- ASIDE: SIDEBAR NAVIGATION -->
+    <aside class="app-sidebar" aria-label="Navigasi Utama">
+      <header class="sidebar-header">
+        <img src="assets/images/icons/logo.svg" alt="Terratech Hub Logo" class="brand-icon">
+        <div class="brand-info">
+          <span class="brand-title">TERRATECH</span>
+          <span class="brand-subtitle">Micro-Habitat OS</span>
+        </div>
+      </header>
+
+      <nav class="sidebar-nav">
+        <div class="nav-label">Sistem Kontrol</div>
+        <a href="index.html" class="nav-item" id="nav-dashboard">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="9"/>
+            <rect x="14" y="3" width="7" height="5"/>
+            <rect x="14" y="12" width="7" height="9"/>
+            <rect x="3" y="16" width="7" height="5"/>
+          </svg>
+          <span>Dashboard</span>
+        </a>
+        <a href="units.html" class="nav-item active" id="nav-units">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+            <line x1="3" y1="9" x2="21" y2="9"/>
+            <line x1="9" y1="21" x2="9" y2="9"/>
+          </svg>
+          <span>Enclosure Units</span>
+          <span class="badge badge-leaf badge-pill">4 Tank</span>
+        </a>
+        <a href="registry.html" class="nav-item" id="nav-registry">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M11 20A7 7 0 0 1 4 13C4 7 11 3 11 3s7 4 7 10a7 7 0 0 1-7 7z"/>
+            <path d="M11 20v-8M11 12l4-4M11 15l-3-3"/>
+          </svg>
+          <span>Flora &amp; Fauna</span>
+        </a>
+        <a href="maintenance.html" class="nav-item" id="nav-maintenance">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+          </svg>
+          <span>Maintenance</span>
+          <span class="badge badge-amber badge-pill">1 Due</span>
+        </a>
+        <a href="diagnostics.html" class="nav-item" id="nav-diagnostics">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+          <span>Diagnostics &amp; Logs</span>
+        </a>
+
+        <div class="nav-label" style="margin-top: 1.5rem;">Status Sensorik</div>
+        <div style="padding: 0 0.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+          <div style="font-size: 0.75rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+            <span>Zona Tropis</span>
+            <span style="color: var(--accent-leaf);">Optimal (Tank 1 &amp; 2)</span>
+          </div>
+          <div style="font-size: 0.75rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+            <span>Zona Kering &amp; Air</span>
+            <span style="color: var(--accent-amber);">Normal (Tank 3 &amp; 4)</span>
+          </div>
+        </div>
+      </nav>
+
+      <footer class="sidebar-footer">
+        <div class="micro-node-card">
+          <div class="node-header">
+            <span>CORE NODE #01</span>
+            <span class="node-status-dot"></span>
+          </div>
+          <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-main);">
+            Aktuator Unit Sinkron
+          </div>
+          <div style="font-size: 0.7rem; color: var(--text-muted); font-family: var(--font-mono);">
+            Protokol Modbus/Zigbee OK
+          </div>
+        </div>
+      </footer>
+    </aside>
+
+    <!-- MAIN APP WRAPPER -->
+    <div class="app-main">
+      <header class="app-topbar">
+        <div class="topbar-left">
+          <label for="nav-toggle" class="nav-toggle-btn" aria-label="Toggle navigasi mobile">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </label>
+          <div class="breadcrumbs">
+            <span>Sistem</span>
+            <span>/</span>
+            <span class="current">Enclosure Units</span>
+          </div>
+        </div>
+
+        <div class="topbar-ticker">
+          <div class="ticker-item">
+            <span style="color: var(--text-muted);">TOTAL HABITAT:</span>
+            <span class="val">4 Unit</span>
+          </div>
+          <span class="ticker-sep">|</span>
+          <div class="ticker-item">
+            <span style="color: var(--text-muted);">NOZZLE MISTING:</span>
+            <span class="val" style="color: var(--accent-cyan);">12 Terpasang</span>
+          </div>
+          <span class="ticker-sep">|</span>
+          <div class="ticker-item">
+            <span style="color: var(--text-muted);">DRAINASE:</span>
+            <span class="val" style="color: var(--accent-leaf);">Normal</span>
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <a href="diagnostics.html" class="btn btn-secondary btn-sm">Inspeksi Manual</a>
+          <button type="button" class="btn btn-outline-cyan btn-sm">Siklus Kabut Massal</button>
+        </div>
+      </header>
+
+      <!-- CONTENT AREA -->
+      <main class="content-area">
+        <section class="page-hero" aria-labelledby="units-page-title">
+          <div class="hero-titles">
+            <h1 id="units-page-title">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent-leaf)" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                <line x1="3" y1="9" x2="21" y2="9"/>
+                <line x1="9" y1="21" x2="9" y2="9"/>
+              </svg>
+              Manajemen Unit Enclosure Terrarium
+            </h1>
+            <p>Pengendalian mikroklimat individual, pemantauan dekomposisi bioaktif, dan status lapisan substrat setiap tangki habitat.</p>
+          </div>
+          <div class="hero-meta">
+            <span class="badge badge-leaf">4 Tank Operasional</span>
+            <span class="badge badge-muted">Arsitektur Bioaktif</span>
+          </div>
+        </section>
+
+        <!-- ENCLOSURES GRID (4 Detailed Habitat Cards) -->
+        <section class="enclosures-grid" aria-label="Daftar Enclosure Terrarium">
+
+          <!-- ENCLOSURE 1: Amazonian Understory -->
+          <article class="enclosure-card" id="tank-01">
+            <figure class="enclosure-visual">
+              <img src="assets/images/enclosures/tank-01-amazon.jpg" alt="Foto Terrarium Tank 01 Amazonian Understory" loading="lazy">
+              <div class="enclosure-overlay-badge">
+                <span class="badge badge-leaf">Rainforest Bioactive</span>
+              </div>
+              <div class="enclosure-status-tag">
+                <span class="badge badge-leaf">● Kondisi Optimal</span>
+              </div>
+            </figure>
+
+            <div class="enclosure-body">
+              <div class="enclosure-header-title">
+                <div>
+                  <span class="enclosure-tank-code">TANK_ID #01 • 90 × 45 × 90 cm</span>
+                  <h3>Amazonian Understory</h3>
+                </div>
+              </div>
+              <p>Bioma kanopi hutan hujan tropis Amazonia. Habitat katak panah beracun (<em>Ranitomeya</em>) dan liana shingling.</p>
+
+              <!-- Telemetry Specs Grid -->
+              <div class="enclosure-specs-row">
+                <div class="spec-cell">
+                  <span class="val">25.2°C</span>
+                  <span class="lbl">Suhu</span>
+                </div>
+                <div class="spec-cell">
+                  <span class="val" style="color: var(--accent-cyan);">88%</span>
+                  <span class="lbl">Kelembapan</span>
+                </div>
+                <div class="spec-cell">
+                  <span class="val" style="color: #facc15;">4,200</span>
+                  <span class="lbl">Lux LED</span>
+                </div>
+              </div>
+
+              <!-- Substrate Layers Diagram -->
+              <div class="sub-bar-item">
+                <div class="sub-bar-header">
+                  <span>Kesehatan Substrat ABG Mix</span>
+                  <span style="color: var(--accent-leaf);">72% Lembap (Ideal)</span>
+                </div>
+                <div class="progress-bar-wrap">
+                  <div class="progress-fill" style="--progress: 72%; background: var(--accent-leaf);"></div>
+                </div>
+              </div>
+
+              <!-- Cross Section Layers Visual -->
+              <div class="substrate-layers-visual">
+                <div class="layer-step layer-canopy">
+                  <span>🌿 Kanopi / Epifit</span>
+                  <span>Marcgravia &amp; Bromelia</span>
+                </div>
+                <div class="layer-step layer-litter">
+                  <span>🍂 Serasah Daun Oak</span>
+                  <span>Isopoda &amp; Collembola</span>
+                </div>
+                <div class="layer-step layer-soil">
+                  <span>🌱 Substrat ABG Mix</span>
+                  <span>pH 6.4 • Mikoriza Aktif</span>
+                </div>
+                <div class="layer-step layer-mesh">
+                  <span>🕸️ Mesh Barrier</span>
+                  <span>Pemisah Anti-Sumbat</span>
+                </div>
+                <div class="layer-step layer-drain">
+                  <span>💧 False Bottom LECA</span>
+                  <span>Air Drainase: 2.1 cm</span>
+                </div>
+              </div>
+
+              <!-- Hardware Control Buttons -->
+              <div style="display: flex; gap: 0.5rem; margin-top: auto;">
+                <button type="button" class="btn btn-outline-cyan btn-sm" style="flex: 1;">
+                  💧 Mist 30s
+                </button>
+                <a href="diagnostics.html" class="btn btn-secondary btn-sm" style="flex: 1;">
+                  Diagnostik
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- ENCLOSURE 2: Montane Cloud Forest -->
+          <article class="enclosure-card" id="tank-02">
+            <figure class="enclosure-visual">
+              <img src="assets/images/enclosures/tank-02-cloud.jpg" alt="Foto Terrarium Tank 02 Montane Cloud Forest" loading="lazy">
+              <div class="enclosure-overlay-badge">
+                <span class="badge badge-cyan">Highland Paludarium</span>
+              </div>
+              <div class="enclosure-status-tag">
+                <span class="badge badge-cyan">● Misting Aktif</span>
+              </div>
+            </figure>
+
+            <div class="enclosure-body">
+              <div class="enclosure-header-title">
+                <div>
+                  <span class="enclosure-tank-code">TANK_ID #02 • 60 × 45 × 60 cm</span>
+                  <h3>Montane Cloud Forest</h3>
+                </div>
+              </div>
+              <p>Hutan pegunungan berselimut kabut konstan dengan air terjun mini bertingkat dan lumut sphagnum hidup.</p>
+
+              <div class="enclosure-specs-row">
+                <div class="spec-cell">
+                  <span class="val">20.8°C</span>
+                  <span class="lbl">Suhu Dingin</span>
+                </div>
+                <div class="spec-cell">
+                  <span class="val" style="color: var(--accent-cyan);">94%</span>
+                  <span class="lbl">Kelembapan</span>
+                </div>
+                <div class="spec-cell">
+                  <span class="val" style="color: #facc15;">3,800</span>
+                  <span class="lbl">Lux LED</span>
+                </div>
+              </div>
+
+              <div class="sub-bar-item">
+                <div class="sub-bar-header">
+                  <span>Kelembapan Sphagnum &amp; Pumice</span>
+                  <span style="color: var(--accent-cyan);">88% Sangat Tinggi</span>
+                </div>
+                <div class="progress-bar-wrap">
+                  <div class="progress-fill" style="--progress: 88%; background: var(--accent-cyan);"></div>
+                </div>
+              </div>
+
+              <div class="substrate-layers-visual">
+                <div class="layer-step layer-canopy">
+                  <span>🌸 Orkid Miniatur</span>
+                  <span>Pleurothallis &amp; Masdevallia</span>
+                </div>
+                <div class="layer-step layer-litter">
+                  <span>🍃 Live Sphagnum Moss</span>
+                  <span>Retensi Air Maksimum</span>
+                </div>
+                <div class="layer-step layer-soil">
+                  <span>🪨 Batuan Vulkanik Slate</span>
+                  <span>pH 5.9 • Bebas Jamur</span>
+                </div>
+                <div class="layer-step layer-drain">
+                  <span>🌊 Kolam Bio-Filter</span>
+                  <span>Air Terjun Berjalan 1.2L/m</span>
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 0.5rem; margin-top: auto;">
+                <button type="button" class="btn btn-outline-cyan btn-sm" style="flex: 1;">
+                  ❄️ Chilled Mist
+                </button>
+                <a href="diagnostics.html" class="btn btn-secondary btn-sm" style="flex: 1;">
+                  Diagnostik
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- ENCLOSURE 3: Madagascar Spiny Forest -->
+          <article class="enclosure-card" id="tank-03">
+            <figure class="enclosure-visual">
+              <img src="assets/images/enclosures/tank-03-spiny.jpg" alt="Foto Terrarium Tank 03 Madagascar Spiny Forest" loading="lazy">
+              <div class="enclosure-overlay-badge">
+                <span class="badge badge-amber">Semi-Arid Bioactive</span>
+              </div>
+              <div class="enclosure-status-tag">
+                <span class="badge badge-amber">● Basking Zone ON</span>
+              </div>
+            </figure>
+
+            <div class="enclosure-body">
+              <div class="enclosure-header-title">
+                <div>
+                  <span class="enclosure-tank-code">TANK_ID #03 • 90 × 45 × 60 cm</span>
+                  <h3>Madagascar Spiny Forest</h3>
+                </div>
+              </div>
+              <p>Zona semi-arid endemik Madagaskar. Tanaman sukulen berakar dalam dengan titik jemur basking hangat.</p>
+
+              <div class="enclosure-specs-row">
+                <div class="spec-cell">
+                  <span class="val" style="color: var(--accent-amber);">29.5°C</span>
+                  <span class="lbl">Suhu Ruang</span>
+                </div>
+                <div class="spec-cell">
+                  <span class="val" style="color: var(--accent-amber);">42%</span>
+                  <span class="lbl">Kelembapan</span>
+                </div>
+                <div class="spec-cell">
+                  <span class="val" style="color: #facc15;">8,500</span>
+                  <span class="lbl">Lux Intens</span>
+                </div>
+              </div>
+
+              <div class="sub-bar-item">
+                <div class="sub-bar-header">
+                  <span>Kelembapan Substrat Granit &amp; Lempung</span>
+                  <span style="color: var(--accent-amber);">28% Rendah (Sesuai)</span>
+                </div>
+                <div class="progress-bar-wrap">
+                  <div class="progress-fill" style="--progress: 28%; background: var(--accent-amber);"></div>
+                </div>
+              </div>
+
+              <div class="substrate-layers-visual">
+                <div class="layer-step layer-canopy">
+                  <span>🌵 Sukulen Spiny</span>
+                  <span>Alluaudia &amp; Euphorbia</span>
+                </div>
+                <div class="layer-step layer-litter">
+                  <span>☀️ Basking Stone Rock</span>
+                  <span>Titik Hangat 34.0°C</span>
+                </div>
+                <div class="layer-step layer-soil">
+                  <span>🏜️ Decomposed Granite Mix</span>
+                  <span>Drainase Porous Cepat</span>
+                </div>
+                <div class="layer-step layer-drain">
+                  <span>🪨 Lapisan Pasir Kasar</span>
+                  <span>Kering Tanpa Genangan</span>
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 0.5rem; margin-top: auto;">
+                <button type="button" class="btn btn-secondary btn-sm" style="flex: 1;">
+                  🌅 Siklus Embun Pagi
+                </button>
+                <a href="diagnostics.html" class="btn btn-secondary btn-sm" style="flex: 1;">
+                  Diagnostik
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- ENCLOSURE 4: Borneo Peat Swamp -->
+          <article class="enclosure-card" id="tank-04">
+            <figure class="enclosure-visual">
+              <img src="assets/images/enclosures/tank-04-peat.jpg" alt="Foto Terrarium Tank 04 Borneo Peat Swamp" loading="lazy">
+              <div class="enclosure-overlay-badge">
+                <span class="badge badge-leaf">Bornean Riparium</span>
+              </div>
+              <div class="enclosure-status-tag">
+                <span class="badge badge-leaf">● CO2 Dosing Stabil</span>
+              </div>
+            </figure>
+
+            <div class="enclosure-body">
+              <div class="enclosure-header-title">
+                <div>
+                  <span class="enclosure-tank-code">TANK_ID #04 • 120 × 60 × 60 cm</span>
+                  <h3>Borneo Peat Swamp</h3>
+                </div>
+              </div>
+              <p>Rawa gambut hutan tropis Kalimantan. Tanaman rheophyte langka (<em>Bucephalandra</em>) dan perairan asam gelap.</p>
+
+              <div class="enclosure-specs-row">
+                <div class="spec-cell">
+                  <span class="val">26.1°C</span>
+                  <span class="lbl">Suhu Air</span>
+                </div>
+                <div class="spec-cell">
+                  <span class="val" style="color: var(--accent-cyan);">82%</span>
+                  <span class="lbl">Kelembapan</span>
+                </div>
+                <div class="spec-cell">
+                  <span class="val" style="color: var(--accent-leaf);">5.8</span>
+                  <span class="lbl">pH Air Asam</span>
+                </div>
+              </div>
+
+              <div class="sub-bar-item">
+                <div class="sub-bar-header">
+                  <span>Substrat Stratum &amp; Pasir Gambut</span>
+                  <span style="color: var(--accent-leaf);">92% Terhidrasi</span>
+                </div>
+                <div class="progress-bar-wrap">
+                  <div class="progress-fill" style="--progress: 92%; background: var(--accent-leaf);"></div>
+                </div>
+              </div>
+
+              <div class="substrate-layers-visual">
+                <div class="layer-step layer-canopy">
+                  <span>🌿 Rheofit Endemik</span>
+                  <span>Bucephalandra &amp; Cryptocoryne</span>
+                </div>
+                <div class="layer-step layer-litter">
+                  <span>🪵 Akar Kayu Driftwood</span>
+                  <span>Pelepasan Tanin Alami</span>
+                </div>
+                <div class="layer-step layer-soil">
+                  <span>🌱 Substrat Aqua-Soil</span>
+                  <span>Kaya Asam Fulvat &amp; Besi</span>
+                </div>
+                <div class="layer-step layer-drain">
+                  <span>🌊 Sirkulasi Wavemaker</span>
+                  <span>TDS 45 ppm • Arus Halus</span>
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 0.5rem; margin-top: auto;">
+                <button type="button" class="btn btn-outline-cyan btn-sm" style="flex: 1;">
+                  🧪 Cek Dosis Pupuk
+                </button>
+                <a href="diagnostics.html" class="btn btn-secondary btn-sm" style="flex: 1;">
+                  Diagnostik
+                </a>
+              </div>
+            </div>
+          </article>
+
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>
