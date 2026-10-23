@@ -1,6 +1,10 @@
 import { useState } from 'react'
 import Header from './component/Header'
-
+import Navbar from './component/Navbar'
+import Tentang from './component/Tentang'
+import RingkasanTerrarium from './component/RingkasanTerrarium'
+import FormTambahTerrarium from './component/FormTambahTerrarium'
+import DaftarTerrarium from './component/DaftarTerrarium'
 import './App.css'
 
 const dataAwal = [
