@@ -1,0 +1,87 @@
+### ============================================================================
+### TERRATECH HUB - Pengujian Endpoint REST API Enclosures (VS Code REST Client)
+### Base URL: http://localhost:3000/enclosures
+### ============================================================================
+
+@baseUrl = http://localhost:3000/enclosures
+
+### 1. GET Semua Data Enclosure (200 OK)
+GET {{baseUrl}}
+Accept: application/json
+
+
+### 2. GET Satu Data Enclosure dengan ID Valid (200 OK)
+GET {{baseUrl}}/1
+Accept: application/json
+
+
+### 3. POST Tambah Data Enclosure Valid (201 Created)
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "name": "Sumatran Mossy Cavern",
+  "type": "cloud",
+  "temperature": 21.5,
+  "humidity": 92,
+  "isMistingActive": true,
+  "lastMaintenance": "2026-10-07",
+  "inhabitants": [
+    "Megophrys nasuta",
+    "Live Sphagnum Moss",
+    "Folsomia candida (Springtail)"
+  ]
+}
+
+
+### 4. POST Data Tidak Valid - Uji Validasi DTO class-validator (400 Bad Request)
+# - name kurang dari 3 karakter ("AB")
+# - type di luar pilihan ('desert' tidak ada di ['amazon','cloud','spiny','peat'])
+# - temperature melebihi batas maksimum 40 (55)
+# - humidity di luar rentang 0-100 (150)
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "name": "AB",
+  "type": "desert",
+  "temperature": 55,
+  "humidity": 150,
+  "isMistingActive": "bukan-boolean",
+  "lastMaintenance": "bukan-tanggal"
+}
+
+
+### 5. POST Nama Duplikat Case-Insensitive - Uji ConflictException (409 Conflict)
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "name": "amazonian understory",
+  "type": "amazon",
+  "temperature": 25.0,
+  "humidity": 85,
+  "isMistingActive": true,
+  "lastMaintenance": "2026-10-07"
+}
+
+
+### 6. GET ID Tidak Ada - Uji NotFoundException (404 Not Found)
+GET {{baseUrl}}/999
+Accept: application/json
+
+
+### 7. PATCH Perbarui Data Enclosure Berdasarkan ID (200 OK)
+PATCH {{baseUrl}}/3
+Content-Type: application/json
+
+{
+  "temperature": 30.2,
+  "humidity": 45,
+  "isMistingActive": true
+}
+
+
+### 8. DELETE Hapus Data Enclosure Berdasarkan ID (200 OK)
+DELETE {{baseUrl}}/4
+Accept: application/json

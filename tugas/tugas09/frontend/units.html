@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="id" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Terratech Hub: Manajemen Unit Enclosure Terrarium terintegrasi REST API NestJS.">
+  <title>Terratech Hub | Enclosure Units</title>
+  <link rel="icon" type="image/svg+xml" href="assets/images/icons/logo.svg">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous" defer></script>
+  <script src="assets/js/api.js" defer></script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
+
+  <div class="app-shell">
+    <aside class="app-sidebar offcanvas-lg offcanvas-start" tabindex="-1" id="sidebarNav" aria-labelledby="sidebarLabel">
+      <div class="sidebar-brand-bar">
+        <div class="d-flex align-items-center gap-2">
+          <img src="assets/images/icons/logo.svg" alt="Logo Terratech Hub" width="34" height="34">
+          <div class="d-flex flex-column">
+            <span class="brand-title" id="sidebarLabel">TERRATECH</span>
+            <span class="brand-subtitle">Micro-Habitat OS</span>
+          </div>
+        </div>
+        <button type="button" class="btn-close d-lg-none" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Tutup navigasi"></button>
+      </div>
+
+      <div class="offcanvas-body d-flex flex-column p-0 flex-grow-1 overflow-y-auto">
+        <nav class="sidebar-nav nav flex-column p-3 gap-1 flex-grow-1" aria-label="Menu Utama">
+          <div class="sidebar-nav-section">Sistem Kontrol</div>
+          <a href="index.html" class="nav-link" id="nav-dashboard">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/>
+            </svg>
+            <span>Dashboard</span>
+          </a>
+          <a href="units.html" class="nav-link active" id="nav-units" aria-current="page">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/>
+            </svg>
+            <span>Enclosure Units</span>
+            <span class="badge-soft badge-soft-leaf ms-auto" id="sidebar-tank-count">4 Tank</span>
+          </a>
+          <a href="registry.html" class="nav-link" id="nav-registry">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M11 20A7 7 0 0 1 4 13C4 7 11 3 11 3s7 4 7 10a7 7 0 0 1-7 7z"/><path d="M11 20v-8M11 12l4-4M11 15l-3-3"/>
+            </svg>
+            <span>Flora &amp; Fauna</span>
+          </a>
+          <a href="maintenance.html" class="nav-link" id="nav-maintenance">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+            </svg>
+            <span>Maintenance</span>
+            <span class="badge-soft badge-soft-amber ms-auto">1 Due</span>
+          </a>
+          <a href="diagnostics.html" class="nav-link" id="nav-diagnostics">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>
+            <span>Diagnostics &amp; Logs</span>
+          </a>
+
+          <div class="sidebar-nav-section mt-3">Status Sensorik</div>
+          <div class="sidebar-telemetry-box">
+            <div class="sidebar-telemetry-row">
+              <span class="k">REST API</span>
+              <span class="v text-leaf" id="api-connection-badge">TERHUBUNG</span>
+            </div>
+            <div class="sidebar-telemetry-row">
+              <span class="k">Kering &amp; Air</span>
+              <span class="v text-amber">Normal</span>
+            </div>
+          </div>
+        </nav>
+
+        <div class="sidebar-footer-box mt-auto">
+          <div class="micro-node-card">
+            <div class="d-flex justify-content-between align-items-center font-mono small text-muted-soft mb-1">
+              <span>CORE NODE #01</span>
+              <span class="status-dot status-dot-leaf" aria-label="Node aktif"></span>
+            </div>
+            <div class="fw-semibold small">NestJS API Integrated</div>
+            <div class="font-mono text-muted-soft" style="font-size: 0.72rem;">Endpoint: /enclosures</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="app-main">
+      <header class="app-topbar navbar px-3 px-lg-4">
+        <div class="container-fluid px-0 gap-3 flex-nowrap">
+          <div class="d-flex align-items-center gap-3 min-w-0">
+            <button class="btn btn-secondary d-lg-none d-inline-flex align-items-center justify-content-center p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav" aria-label="Buka navigasi">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+              </svg>
+            </button>
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb mb-0 small">
+                <li class="breadcrumb-item text-muted-soft">Sistem</li>
+                <li class="breadcrumb-item active fw-semibold text-body" aria-current="page">Enclosure Units</li>
+              </ol>
+            </nav>
+          </div>
+
+          <div class="topbar-ticker d-none d-xl-flex align-items-center gap-3">
+            <span><span class="text-muted-soft">TOTAL HABITAT:</span> <strong id="ticker-tank-count">4 Unit</strong></span>
+            <span class="text-secondary" aria-hidden="true">|</span>
+            <span><span class="text-muted-soft">BACKEND:</span> <strong class="text-cyan">NestJS REST API</strong></span>
+            <span class="text-secondary" aria-hidden="true">|</span>
+            <span><span class="text-muted-soft">DRAINASE:</span> <strong class="text-leaf">Normal</strong></span>
+          </div>
+
+          <div class="d-flex align-items-center gap-2 flex-shrink-0">
+            <button type="button" class="btn btn-secondary btn-sm d-none d-sm-inline-flex" id="btn-refresh-enclosures">
+              Muat Ulang
+            </button>
+            <button type="button" class="btn btn-primary btn-sm" id="btn-open-create-modal">
+              + Tambah Enclosure
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main class="container-fluid px-3 px-lg-4 py-4 flex-grow-1" id="main-content" style="max-width: 1380px;">
+        <section class="page-hero d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4" aria-labelledby="units-page-title">
+          <div>
+            <h1 id="units-page-title" class="mb-2">Manajemen Unit Enclosure Terrarium</h1>
+            <p class="mb-0" style="max-width: 66ch;">Pengendalian mikroklimat individual, pemantauan kelembapan &amp; misting, serta manajemen data kandang terarium secara langsung melalui REST API NestJS.</p>
+          </div>
+          <div class="d-flex flex-wrap gap-2 align-items-center">
+            <span class="badge-soft badge-soft-leaf" id="hero-tank-count">4 Tank Operasional</span>
+            <span class="badge-soft badge-soft-cyan">CRUD API Aktif</span>
+          </div>
+        </section>
+
+        <!-- ALERT FEEDBACK CONTAINER -->
+        <div id="api-alert-container" aria-live="polite"></div>
+
+        <!-- ENCLOSURES GRID CONTAINER (Rendered from NestJS API) -->
+        <section class="row g-4" id="enclosures-container" aria-label="Daftar Enclosure Terrarium">
+          <div class="col-12">
+            <div class="card p-4 text-center text-muted-soft font-mono">
+              Memuat data enclosure dari server NestJS (http://localhost:3000/enclosures)...
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="app-footer px-3 px-lg-4 py-3 d-flex flex-wrap justify-content-between align-items-center gap-2">
+        <span>Terratech Hub Micro-Habitat OS</span>
+        <span>Integrasi NestJS MVC + Bootstrap 5.3</span>
+      </footer>
+    </div>
+  </div>
+
+  <!-- BOOTSTRAP MODAL: TAMBAH / UBAH ENCLOSURE -->
+  <div class="modal fade" id="enclosureModal" tabindex="-1" aria-labelledby="enclosureModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content" style="background-color: var(--bg-surface); border: 1px solid var(--border-strong);">
+        <div class="modal-header" style="border-bottom: 1px solid var(--border-subtle);">
+          <h2 class="modal-title h5 mb-0" id="enclosureModalLabel">Tambah Enclosure Baru</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+        </div>
+        <form id="enclosureForm" novalidate>
+          <div class="modal-body p-4">
+            <div id="modal-error-box" class="alert alert-danger d-none small mb-3" role="alert"></div>
+            <input type="hidden" id="enclosure-id">
+
+            <div class="row g-3">
+              <div class="col-12 col-md-7">
+                <label for="enclosure-name" class="form-label font-mono small text-uppercase text-muted-soft">Nama Enclosure * (Min. 3 Karakter)</label>
+                <input type="text" class="form-control" id="enclosure-name" placeholder="Contoh: Amazonian Understory" required minlength="3">
+              </div>
+
+              <div class="col-12 col-md-5">
+                <label for="enclosure-type" class="form-label font-mono small text-uppercase text-muted-soft">Tipe Bioma *</label>
+                <select class="form-select" id="enclosure-type" required>
+                  <option value="amazon">amazon (Rainforest Bioactive)</option>
+                  <option value="cloud">cloud (Highland Paludarium)</option>
+                  <option value="spiny">spiny (Semi-Arid Bioactive)</option>
+                  <option value="peat">peat (Bornean Riparium)</option>
+                </select>
+              </div>
+
+              <div class="col-12 col-md-4">
+                <label for="enclosure-temperature" class="form-label font-mono small text-uppercase text-muted-soft">Suhu (°C) * [10 - 40]</label>
+                <input type="number" step="0.1" min="10" max="40" class="form-control" id="enclosure-temperature" placeholder="25.2" required>
+              </div>
+
+              <div class="col-12 col-md-4">
+                <label for="enclosure-humidity" class="form-label font-mono small text-uppercase text-muted-soft">Kelembapan (%) * [0 - 100]</label>
+                <input type="number" step="1" min="0" max="100" class="form-control" id="enclosure-humidity" placeholder="88" required>
+              </div>
+
+              <div class="col-12 col-md-4">
+                <label for="enclosure-maintenance" class="form-label font-mono small text-uppercase text-muted-soft">Perawatan Terakhir (ISO) *</label>
+                <input type="date" class="form-control" id="enclosure-maintenance" required>
+              </div>
+
+              <div class="col-12">
+                <label for="enclosure-inhabitants" class="form-label font-mono small text-uppercase text-muted-soft">Spesimen Penghuni (Pisahkan dengan koma)</label>
+                <input type="text" class="form-control" id="enclosure-inhabitants" placeholder="Contoh: Ranitomeya amazonica, Marcgravia sintenisii, Springtail">
+              </div>
+
+              <div class="col-12 pt-1">
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" role="switch" id="enclosure-misting" checked>
+                  <label class="form-check-label small fw-semibold" for="enclosure-misting">
+                    Sistem Pengabutan Otomatis (Misting Active)
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer" style="border-top: 1px solid var(--border-subtle);">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+            <button type="submit" class="btn btn-primary" id="btn-save-enclosure">Simpan Enclosure</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPT PENGHUBUNG UI DENGAN API.JS -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('enclosures-container');
+      const alertContainer = document.getElementById('api-alert-container');
+      const sidebarCount = document.getElementById('sidebar-tank-count');
+      const tickerCount = document.getElementById('ticker-tank-count');
+      const heroCount = document.getElementById('hero-tank-count');
+      const apiBadge = document.getElementById('api-connection-badge');
+
+      const modalEl = document.getElementById('enclosureModal');
+      const modal = new bootstrap.Modal(modalEl);
+      const modalTitle = document.getElementById('enclosureModalLabel');
+      const modalErrorBox = document.getElementById('modal-error-box');
+      const form = document.getElementById('enclosureForm');
+
+      const inputId = document.getElementById('enclosure-id');
+      const inputName = document.getElementById('enclosure-name');
+      const inputType = document.getElementById('enclosure-type');
+      const inputTemp = document.getElementById('enclosure-temperature');
+      const inputHumidity = document.getElementById('enclosure-humidity');
+      const inputMaintenance = document.getElementById('enclosure-maintenance');
+      const inputInhabitants = document.getElementById('enclosure-inhabitants');
+      const inputMisting = document.getElementById('enclosure-misting');
+
+      // Konfigurasi visual berdasarkan tipe enclosure
+      const TYPE_META = {
+        amazon: {
+          image: 'assets/images/enclosures/tank-01-amazon.jpg',
+          biomeLabel: 'Rainforest Bioactive',
+          badgeClass: 'badge-soft-leaf',
+          barClass: 'bg-success',
+          desc: 'Bioma kanopi hutan hujan tropis lembap dengan substrat ABG bioaktif.',
+        },
+        cloud: {
+          image: 'assets/images/enclosures/tank-02-cloud.jpg',
+          biomeLabel: 'Highland Paludarium',
+          badgeClass: 'badge-soft-cyan',
+          barClass: 'bg-info',
+          desc: 'Hutan pegunungan berkabut dengan sirkulasi air terjun dan lumut sphagnum.',
+        },
+        spiny: {
+          image: 'assets/images/enclosures/tank-03-spiny.jpg',
+          biomeLabel: 'Semi-Arid Bioactive',
+          badgeClass: 'badge-soft-amber',
+          barClass: 'bg-warning',
+          desc: 'Zona semi-arid hangat dengan drainase granit porous dan titik jemur basking.',
+        },
+        peat: {
+          image: 'assets/images/enclosures/tank-04-peat.jpg',
+          biomeLabel: 'Bornean Riparium',
+          badgeClass: 'badge-soft-leaf',
+          barClass: 'bg-success',
+          desc: 'Rawa gambut tropis Kalimantan dengan tanaman rheofit dan perairan asam.',
+        },
+      };
+
+      let cachedEnclosures = [];
+
+      function escapeHtml(str) {
+        return String(str ?? '')
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+
+      function showAlert(message, type = 'success') {
+        alertContainer.innerHTML = `
+          <div class="alert alert-${type} alert-dismissible fade show d-flex align-items-center justify-content-between mb-4" role="alert">
+            <span>${escapeHtml(message)}</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+          </div>
+        `;
+      }
+
+      function updateCounters(count) {
+        sidebarCount.textContent = `${count} Tank`;
+        tickerCount.textContent = `${count} Unit`;
+        heroCount.textContent = `${count} Tank Operasional`;
+      }
+
+      function renderCards(enclosures) {
+        cachedEnclosures = enclosures;
+        updateCounters(enclosures.length);
+
+        if (enclosures.length === 0) {
+          container.innerHTML = `
+            <div class="col-12">
+              <div class="card p-5 text-center">
+                <h2 class="h5 mb-2">Belum Ada Unit Enclosure</h2>
+                <p class="mb-3">Tambahkan unit enclosure pertama Anda melalui tombol di atas.</p>
+              </div>
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = enclosures
+          .map((item) => {
+            const meta = TYPE_META[item.type] || TYPE_META.amazon;
+            const mistBadgeClass = item.isMistingActive ? 'badge-soft-cyan' : 'badge-soft-muted';
+            const mistBadgeText = item.isMistingActive ? 'Misting Aktif' : 'Misting Siaga';
+            const dateFormatted = (item.lastMaintenance || '').slice(0, 10);
+            const inhabitantsList = Array.isArray(item.inhabitants) && item.inhabitants.length > 0
+              ? item.inhabitants
+              : ['Belum ada spesimen tercatat'];
+
+            return `
+              <div class="col-12 col-lg-6">
+                <article class="card h-100 overflow-hidden" id="tank-0${escapeHtml(item.id)}">
+                  <figure class="media-frame media-frame-16x9 media-frame-top-scrim m-0">
+                    <img src="${meta.image}" alt="Foto ${escapeHtml(item.name)}" width="640" height="360">
+                    <span class="badge-soft ${meta.badgeClass} badge-overlay media-badge-tl">${meta.biomeLabel}</span>
+                    <span class="badge-soft ${mistBadgeClass} badge-overlay media-badge-tr">${mistBadgeText}</span>
+                  </figure>
+                  <div class="card-body p-4 d-flex flex-column gap-3">
+                    <div>
+                      <span class="font-mono small text-leaf d-block mb-1">TANK_ID #0${escapeHtml(item.id)} • TIPE: ${escapeHtml(item.type.toUpperCase())}</span>
+                      <h2 class="h4 mb-1">${escapeHtml(item.name)}</h2>
+                      <p class="mb-0 small">${meta.desc}</p>
+                    </div>
+
+                    <div class="spec-strip row g-0 text-center py-2">
+                      <div class="col-4">
+                        <div class="font-mono fw-bold fs-6">${escapeHtml(item.temperature)}°C</div>
+                        <div class="text-uppercase text-muted-soft" style="font-size: 0.7rem;">Suhu</div>
+                      </div>
+                      <div class="col-4">
+                        <div class="font-mono fw-bold fs-6 text-cyan">${escapeHtml(item.humidity)}%</div>
+                        <div class="text-uppercase text-muted-soft" style="font-size: 0.7rem;">Kelembapan</div>
+                      </div>
+                      <div class="col-4">
+                        <div class="font-mono fw-bold fs-6 text-amber">${escapeHtml(dateFormatted)}</div>
+                        <div class="text-uppercase text-muted-soft" style="font-size: 0.7rem;">Perawatan</div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div class="d-flex justify-content-between font-mono small mb-1">
+                        <span class="text-muted-soft">Tingkat Kelembapan Relatif</span>
+                        <span class="text-cyan">${escapeHtml(item.humidity)}% RH</span>
+                      </div>
+                      <div class="progress">
+                        <div class="progress-bar ${meta.barClass}" style="width: ${Math.min(100, Math.max(0, Number(item.humidity) || 0))}%"></div>
+                      </div>
+                    </div>
+
+                    <div class="substrate-layers d-flex flex-column gap-1">
+                      <div class="font-mono text-uppercase text-muted-soft mb-1" style="font-size: 0.68rem;">Spesimen &amp; Agen Bioaktif (${inhabitantsList.length})</div>
+                      <div class="d-flex flex-wrap gap-1">
+                        ${inhabitantsList
+                          .map((sp) => `<span class="badge-soft badge-soft-muted">${escapeHtml(sp)}</span>`)
+                          .join('')}
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-wrap gap-2 mt-auto pt-1">
+                      <button type="button" class="btn btn-outline-info btn-sm flex-fill py-2 btn-toggle-mist" data-id="${item.id}">
+                        ${item.isMistingActive ? 'Matikan Misting' : 'Aktifkan Misting'}
+                      </button>
+                      <button type="button" class="btn btn-secondary btn-sm flex-fill py-2 btn-edit-enclosure" data-id="${item.id}">
+                        Ubah
+                      </button>
+                      <button type="button" class="btn btn-secondary btn-sm py-2 px-3 text-red btn-delete-enclosure" data-id="${item.id}" data-name="${escapeHtml(item.name)}">
+                        Hapus
+                      </button>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            `;
+          })
+          .join('');
+      }
+
+      async function loadEnclosures() {
+        try {
+          const data = await window.EnclosureAPI.getAll();
+          apiBadge.textContent = 'ONLINE';
+          apiBadge.className = 'v text-leaf';
+          renderCards(data);
+        } catch (err) {
+          apiBadge.textContent = 'OFFLINE';
+          apiBadge.className = 'v text-red';
+          showAlert(err.message, 'danger');
+        }
+      }
+
+      // Buka modal tambah data
+      document.getElementById('btn-open-create-modal').addEventListener('click', () => {
+        form.reset();
+        inputId.value = '';
+        inputMaintenance.value = new Date().toISOString().slice(0, 10);
+        inputMisting.checked = true;
+        modalTitle.textContent = 'Tambah Enclosure Baru';
+        modalErrorBox.classList.add('d-none');
+        modal.show();
+      });
+
+      document.getElementById('btn-refresh-enclosures').addEventListener('click', () => {
+        loadEnclosures();
+      });
+
+      // Delegasi klik untuk Toggle Misting, Ubah, dan Hapus
+      container.addEventListener('click', async (e) => {
+        const toggleBtn = e.target.closest('.btn-toggle-mist');
+        if (toggleBtn) {
+          const id = Number(toggleBtn.dataset.id);
+          const current = cachedEnclosures.find((x) => x.id === id);
+          if (!current) return;
+          try {
+            await window.EnclosureAPI.update(id, {
+              isMistingActive: !current.isMistingActive,
+            });
+            showAlert(`Status misting "${current.name}" berhasil diperbarui.`, 'success');
+            await loadEnclosures();
+          } catch (err) {
+            showAlert(err.message, 'danger');
+          }
+          return;
+        }
+
+        const editBtn = e.target.closest('.btn-edit-enclosure');
+        if (editBtn) {
+          const id = Number(editBtn.dataset.id);
+          const current = cachedEnclosures.find((x) => x.id === id);
+          if (!current) return;
+          inputId.value = current.id;
+          inputName.value = current.name;
+          inputType.value = current.type;
+          inputTemp.value = current.temperature;
+          inputHumidity.value = current.humidity;
+          inputMaintenance.value = (current.lastMaintenance || '').slice(0, 10);
+          inputInhabitants.value = Array.isArray(current.inhabitants)
+            ? current.inhabitants.join(', ')
+            : '';
+          inputMisting.checked = Boolean(current.isMistingActive);
+          modalTitle.textContent = `Ubah Enclosure #0${current.id}`;
+          modalErrorBox.classList.add('d-none');
+          modal.show();
+          return;
+        }
+
+        const deleteBtn = e.target.closest('.btn-delete-enclosure');
+        if (deleteBtn) {
+          const id = Number(deleteBtn.dataset.id);
+          const name = deleteBtn.dataset.name;
+          const confirmed = window.confirm(
+            `Apakah Anda yakin ingin menghapus enclosure "${name}" (ID #${id})?`
+          );
+          if (!confirmed) return;
+          try {
+            await window.EnclosureAPI.remove(id);
+            showAlert(`Enclosure "${name}" berhasil dihapus.`, 'success');
+            await loadEnclosures();
+          } catch (err) {
+            showAlert(err.message, 'danger');
+          }
+        }
+      });
+
+      // Submit form Tambah / Ubah
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        modalErrorBox.classList.add('d-none');
+
+        const rawInhabitants = inputInhabitants.value
+          .split(',')
+          .map((s) => s.trim())
+          .filter(Boolean);
+
+        const payload = {
+          name: inputName.value.trim(),
+          type: inputType.value,
+          temperature: Number(inputTemp.value),
+          humidity: Number(inputHumidity.value),
+          isMistingActive: inputMisting.checked,
+          lastMaintenance: inputMaintenance.value
+            ? new Date(inputMaintenance.value).toISOString()
+            : '',
+          inhabitants: rawInhabitants,
+        };
+
+        const editingId = inputId.value ? Number(inputId.value) : null;
+
+        try {
+          if (editingId) {
+            await window.EnclosureAPI.update(editingId, payload);
+            showAlert(`Enclosure "${payload.name}" berhasil diperbarui.`, 'success');
+          } else {
+            await window.EnclosureAPI.create(payload);
+            showAlert(`Enclosure "${payload.name}" berhasil ditambahkan.`, 'success');
+          }
+          modal.hide();
+          await loadEnclosures();
+        } catch (err) {
+          modalErrorBox.textContent = err.message;
+          modalErrorBox.classList.remove('d-none');
+        }
+      });
+
+      loadEnclosures();
+    });
+  </script>
+</body>
+</html>
