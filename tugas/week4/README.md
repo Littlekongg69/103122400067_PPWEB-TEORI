@@ -1,111 +1,159 @@
-# 🌿 Terratech Hub — Micro-Habitat & Terrarium Automation System
+# Terratech Hub - Micro-Habitat & Terrarium Automation System
 
-Terratech Hub adalah antarmuka web monitoring dan manajemen otomatisasi untuk ekosistem tertutup (bioaktif vivarium, paludarium, dan terrarium mini). Web ini dibangun menggunakan **HTML5 semantik** dan **CSS3 murni** tanpa JavaScript atau framework eksternal, berfokus pada desain antarmuka *smart environment* modern dengan estetika *biophilic industrial*.
-
----
-
-## 📌 Gambaran Umum Proyek
-
-Web ini dirancang untuk menjawab kebutuhan pemelihara mikro-ekosistem presisi (reptil mini, katak dart, tanaman karnivora, serta koloni serangga bioaktif). Dashboard dan panel kontrol menyediakan representasi data sensorik, manajemen perangkat keras habitat, katalog keanekaragaman hayati, dan jadwal pemeliharaan rutin.
+Terratech Hub adalah sistem pemantauan dan manajemen perawatan terarium/vivarium bioaktif berbasis web. Proyek ini memadukan **Frontend HTML5 + Bootstrap 5.3** (tema *Biophilic Precision Instrument*) dengan **Backend REST API NestJS (Struktur MVC / Modular)** untuk pengelolaan data **Enclosure** (unit kandang/tangki habitat).
 
 ---
 
-## 🧭 Struktur 5 Menu Utama
+## Gambaran Umum Proyek
 
-Proyek ini memiliki 5 halaman terpisah dengan tata letak konsisten dan status navigasi aktif:
-
-| Menu | File | Deskripsi Fungsional |
-| :--- | :--- | :--- |
-| **1. Dashboard** | `index.html` / `dashboard.html` | Ringkasan telemetri sistem secara langsung: metrik suhu (°C), kelembapan relatif (%), siklus lampu UV (Day/Night cycle bar), status sistem pengabutan (*automated misting*), serta peringatan anomali. |
-| **2. Enclosure Units** | `units.html` | Manajemen unit terrarium individual (Tank 01 - Amazonian Understory, Tank 02 - Montane Cloud Forest, dsb.) lengkap dengan kartu status lingkungan dan kesehatan substrat. |
-| **3. Flora & Fauna Registry** | `registry.html` | Database spesimen hayati: taksonomi, kebutuhan mikroklimat ideal (rentang pH, lux pencahayaan, kelembapan), dan status populasi agen bioaktif (*springtail* & *isopoda*). |
-| **4. Maintenance Schedule** | `maintenance.html` | Kalender agenda pemeliharaan: jadwal pemangkasan lumut (*pruning*), penggantian filter air terjun mini, kalibrasi sensor probe, dan penambahan suplemen nutrisi tanah. |
-| **5. Diagnostics & Logs** | `diagnostics.html` | Catatan log histori anomali parameter habitat, laporan *health check* perangkat aktuator, dan formulir pengajuan inspeksi manual. |
+Aplikasi ini dirancang untuk memantau mikro-ekosistem tertutup (vivarium hutan hujan, paludarium pegunungan, terarium semi-arid, dan riparium gambut). Sistem menyediakan dashboard telemetri sensorik, manajemen unit enclosure terintegrasi CRUD REST API, katalog flora & fauna bioaktif, jadwal pemeliharaan, serta log diagnostik perangkat keras.
 
 ---
 
-## ✨ Fitur & Keunggulan CSS Modern
-
-Meskipun murni berbasis HTML & CSS, proyek ini menerapkan teknik UI/UX modern:
-
-- **100% Native CSS (No JS / No Framework):** Menggunakan semantic markup dan fitur CSS tingkat lanjut.
-- **Biophilic Dark-Mode Theme:** Palet warna *earth-tone* modern (Forest Green, Moss, Warm Amber, Slate Gray).
-- **CSS Grid & Flexbox:** Penataan layout dashboard multi-kolom yang presisi dan responsif.
-- **CSS-Only Metrics & Progress:** Batang pengukur kelembapan dan suhu menggunakan kombinasi pseudo-elements (`::before`/`::after`) dan CSS variable percentages (`--progress`, `--score`).
-- **Pure CSS Filter Tabs:** Penyaringan kategori Flora, Fauna, dan Clean-Up Crew berbasis radio button state (`:checked`).
-- **Interactive Checklists & Strikethrough:** Daftar tugas pemeliharaan interaktif murni CSS dengan efek coretan teks saat dicentang.
-- **Custom Form Controls & Range Sliders:** Tampilan kustom modern untuk input datetime, range bar, select dropdown, dan dropzone upload berkas.
-- **Status Blink Indicators:** Animasi `@keyframes` untuk lampu indikator sensor aktif/siaga dan efek pergeseran cahaya shimmer.
-- **Responsive Web Design:** Tampilan adaptif untuk resolusi desktop, tablet, dan smartphone dengan Media Queries dan toggle menu navigasi mobile tanpa JavaScript.
-
----
-
-## 📂 Struktur Direktori Proyek
+## Struktur Direktori Proyek
 
 ```text
-terratech-hub/
-├── assets/
-│   ├── css/
-│   │   ├── style.css          # Berkas CSS utama (variabel, global, layout, komponen)
-│   │   └── reset.css          # CSS Reset & Normalize
-│   └── images/
-│       ├── enclosures/        # Foto unit terrarium (Tank 01 - Tank 04)
-│       ├── flora-fauna/       # Foto spesimen (Amfibi, Tokek, Flora, Isopoda)
-│       └── icons/             # File SVG icon sistem
-├── index.html                 # Halaman utama (Dashboard)
-├── dashboard.html             # Alias Dashboard
-├── units.html                 # Halaman Enclosure Units
-├── registry.html              # Halaman Flora & Fauna Registry
-├── maintenance.html           # Halaman Maintenance Schedule
-├── diagnostics.html           # Halaman Diagnostics & Logs
-└── README.md                  # Dokumentasi proyek
+proyek/
+├── frontend/                  # Aplikasi Frontend (HTML5 + Bootstrap 5.3 + Fetch API)
+│   ├── assets/
+│   │   ├── css/
+│   │   │   ├── reset.css
+│   │   │   └── style.css      # Custom theme Biophilic Dark Mode & komponen domain
+│   │   ├── js/
+│   │   │   └── api.js         # Modul Fetch REST API ke http://localhost:3000/enclosures
+│   │   └── images/
+│   │       ├── enclosures/    # Foto unit terrarium (tank-01 s/d tank-04)
+│   │       ├── flora-fauna/   # Foto spesimen hayati & agen bioaktif
+│   │       └── icons/         # Ikon SVG sistem
+│   ├── index.html             # 1. Dashboard Utama
+│   ├── dashboard.html         # Alias Dashboard
+│   ├── units.html             # 2. Enclosure Units (Integrasi CRUD API NestJS)
+│   ├── registry.html          # 3. Flora & Fauna Registry
+│   ├── maintenance.html       # 4. Maintenance Schedule
+│   └── diagnostics.html       # 5. Diagnostics & Logs
+├── backend/                   # Aplikasi Backend REST API (NestJS + TypeScript)
+│   ├── src/
+│   │   ├── enclosures/
+│   │   │   ├── dto/
+│   │   │   │   ├── create-enclosure.dto.ts
+│   │   │   │   └── update-enclosure.dto.ts
+│   │   │   ├── entities/
+│   │   │   │   └── enclosure.entity.ts
+│   │   │   ├── enclosures.controller.ts
+│   │   │   ├── enclosures.module.ts
+│   │   │   └── enclosures.service.ts
+│   │   ├── app.module.ts
+│   │   └── main.ts
+│   └── test/
+│       └── enclosures.http    # File uji REST Client VS Code
+├── docs/
+│   └── screenshots/           # Dokumentasi tangkapan layar pengujian API & UI
+├── .gitignore
+└── README.md
 ```
 
 ---
 
-## 🚀 Panduan Membuka & Menjalankan
+## Struktur 5 Menu Frontend
 
-Karena proyek ini hanya menggunakan HTML dan CSS statis, tidak diperlukan runtime server atau instalasi dependensi (seperti Node.js atau Apache).
-
-1. **Jalankan Langsung:**
-   - Cukup klik dua kali (*double click*) pada berkas `index.html`, atau
-   - Buka menggunakan ekstensi **Live Server** di VS Code.
-2. **Navigasi Antar Halaman:**
-   - Gunakan sidebar menu navigasi di sebelah kiri untuk berpindah antara 5 halaman:
-     - 📊 Dashboard (`index.html`)
-     - 🌿 Enclosure Units (`units.html`)
-     - 🍄 Flora & Fauna (`registry.html`)
-     - 🛠️ Maintenance (`maintenance.html`)
-     - 📡 Diagnostics & Logs (`diagnostics.html`)
+| Menu | File | Deskripsi Fungsional |
+| :--- | :--- | :--- |
+| **1. Dashboard** | `frontend/index.html` | Ringkasan telemetri sistem: suhu (°C), kelembapan relatif (%), spektrum lampu UV, matriks aktuator, dan log peringatan. |
+| **2. Enclosure Units** | `frontend/units.html` | Manajemen unit terrarium individual yang terhubung langsung ke REST API NestJS (`GET`, `POST`, `PATCH`, `DELETE`). |
+| **3. Flora & Fauna** | `frontend/registry.html` | Katalog keanekaragaman hayati: taksonomi, parameter mikroklimat ideal, dan penyaringan kategori. |
+| **4. Maintenance** | `frontend/maintenance.html` | Kalender agenda pemeliharaan Oktober 2026, checklist tugas interaktif, dan tabel riwayat perawatan. |
+| **5. Diagnostics & Logs** | `frontend/diagnostics.html` | Laporan *health check* aktuator, histori log anomali 24 jam, dan formulir inspeksi manual. |
 
 ---
 
-## 🎨 Palet Warna & Desain Token
+## Cara Menjalankan Proyek
 
-```css
-:root {
-  /* Brand & Biophilic Palette */
-  --bg-primary: #0f1412;        /* Deep Forest Charcoal */
-  --bg-surface: #18221e;        /* Substrate Dark Green */
-  --bg-surface-elevated: #22302a;
-  
-  --accent-leaf: #34d399;       /* Vibrant Sprout Emerald */
-  --accent-amber: #f59e0b;      /* Basking Heat Warning */
-  --accent-cyan: #38bdf8;       /* High Moisture & Misting */
-  
-  --text-main: #f0fdf4;         /* Crisp Light */
-  --text-muted: #869990;        /* Soft Sage Gray */
-  --border-subtle: #2d3f37;
+### 1. Menjalankan Backend (NestJS)
+
+Pastikan **Node.js** dan **npm** sudah terpasang, lalu jalankan perintah berikut:
+
+```bash
+cd backend
+npm install
+npm run start:dev
+```
+
+Server backend akan berjalan di **`http://localhost:3000`** dengan CORS dan `ValidationPipe` global aktif.
+
+Untuk memastikan build produksi bebas dari error TypeScript:
+
+```bash
+cd backend
+npm run build
+```
+
+### 2. Menjalankan Frontend
+
+Buka terminal baru pada root proyek, lalu jalankan server statis pada folder `frontend/`:
+
+```bash
+cd frontend
+python3 -m http.server 8000
+```
+
+Kemudian buka **`http://localhost:8000/units.html`** (atau gunakan ekstensi **Live Server** di VS Code pada file `frontend/units.html`) untuk menguji fitur Tambah, Ubah, Toggle Misting, dan Hapus Enclosure yang terhubung ke backend NestJS.
+
+---
+
+## Daftar Endpoint REST API (`/enclosures`)
+
+Base URL: `http://localhost:3000`
+
+| Method | Endpoint | Deskripsi | Status Sukses | Kemungkinan Error |
+| :--- | :--- | :--- | :--- | :--- |
+| `GET` | `/enclosures` | Mengambil seluruh daftar enclosure (termasuk 4 data seed awal) | `200 OK` | - |
+| `GET` | `/enclosures/:id` | Mengambil detail satu enclosure berdasarkan `id` numerik | `200 OK` | `400 Bad Request` (ID bukan angka), `404 Not Found` |
+| `POST` | `/enclosures` | Menambahkan unit enclosure baru dengan validasi DTO | `201 Created` | `400 Bad Request` (Validasi gagal), `409 Conflict` (Nama duplikat) |
+| `PATCH` | `/enclosures/:id` | Memperbarui sebagian/seluruh data enclosure berdasarkan `id` | `200 OK` | `400 Bad Request`, `404 Not Found`, `409 Conflict` |
+| `DELETE` | `/enclosures/:id` | Menghapus unit enclosure berdasarkan `id` | `200 OK` | `404 Not Found` |
+
+### Contoh Payload `POST /enclosures`
+
+```json
+{
+  "name": "Sumatran Mossy Cavern",
+  "type": "cloud",
+  "temperature": 21.5,
+  "humidity": 92,
+  "isMistingActive": true,
+  "lastMaintenance": "2026-10-07",
+  "inhabitants": ["Megophrys nasuta", "Live Sphagnum Moss", "Springtail"]
 }
 ```
 
 ---
 
-## 📝 Catatan Tugas
+## Screenshot Pengujian
 
-- **Tujuan Penilaian:** Memenuhi tugas mata kuliah/pemrograman web dengan spesifikasi HTML & CSS murni.
-- **Fokus Evaluasi:** Kerapian struktur semantik HTML, konsistensi arsitektur CSS, keunikan ide, dan responsivitas UI.
+Seluruh tangkapan layar hasil pengujian endpoint REST Client dan integrasi Frontend tersimpan di folder `docs/screenshots/`:
 
----
+### 1. Pengujian Endpoint Backend (REST Client)
 
-*Dikembangkan untuk Tugas Pemrograman Web.*
+- **GET Semua & Satu Data (`200 OK`)**
+  ![GET Enclosures](docs/screenshots/01-get-enclosures.png)
+- **POST Data Valid (`201 Created`)**
+  ![POST Enclosure](docs/screenshots/02-post-enclosure.png)
+- **PATCH Update Data (`200 OK`)**
+  ![PATCH Enclosure](docs/screenshots/03-patch-enclosure.png)
+- **DELETE Data (`200 OK`)**
+  ![DELETE Enclosure](docs/screenshots/04-delete-enclosure.png)
+- **Error 404 Not Found (ID Tidak Ditemukan)**
+  ![Error 404 Not Found](docs/screenshots/05-error-404-not-found.png)
+- **Error 409 Conflict (Nama Enclosure Duplikat)**
+  ![Error 409 Conflict](docs/screenshots/06-error-409-conflict.png)
+- **Error 400 Bad Request (Validasi DTO `class-validator`)**
+  ![Validasi 400 Bad Request](docs/screenshots/07-validation-400-bad-request.png)
+
+### 2. Pengujian Integrasi Frontend (`units.html`)
+
+- **Tampilan Daftar & Tambah Data Enclosure (Modal Bootstrap)**
+  ![Frontend Tambah Data](docs/screenshots/08-frontend-create.png)
+- **Tampilan Ubah Data Enclosure**
+  ![Frontend Ubah Data](docs/screenshots/09-frontend-update.png)
+- **Tampilan Hapus Data Enclosure & Konfirmasi**
+  ![Frontend Hapus Data](docs/screenshots/10-frontend-delete.png)
